@@ -1,0 +1,8 @@
+package com.advertise.dto;
+
+
+public class AdvertiseDto {
+
+	private int id;
+	private String 
+}

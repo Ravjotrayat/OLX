@@ -1,0 +1,26 @@
+package com.login.service;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.login.dto.UserDto;
+import com.login.entity.UserEntity;
+
+@Service
+public class UserServiceImpl implements UserService {
+	
+	
+	@Autowired
+	ModelMapper mapper;
+
+	@Override
+	public UserDto add(UserDto obj) {
+		
+		UserEntity entity=this.mapper.map(obj, UserEntity.class );
+		entity=repository.save(entity);
+		
+		return null;
+	}
+
+}

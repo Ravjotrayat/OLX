@@ -1,0 +1,8 @@
+package com.login.service;
+
+import com.login.dto.UserDto;
+
+public interface UserService {
+
+	public UserDto add();
+}

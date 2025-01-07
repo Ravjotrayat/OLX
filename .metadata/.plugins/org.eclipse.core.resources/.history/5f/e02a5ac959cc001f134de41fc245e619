@@ -1,0 +1,133 @@
+package com.advertise.service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.advertise.dto.AdvertiseDto;
+import com.advertise.entity.AdvertiseEntity;
+import com.advertise.repository.AdvertiseRepository;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+
+@Service
+public class AdvertiseServiceImpl implements AdvertiseService {
+
+	@Autowired
+	AdvertiseRepository repository;
+	
+	@Autowired
+	ModelMapper mapper;
+	
+	@Autowired
+	EntityManager manager;
+	
+//	Get All advertise by logged user
+	@Override
+	public List<AdvertiseDto> getAllinfo() {
+		List<AdvertiseEntity>entities = repository.findAll();
+		return entities.stream()
+				.map(entity->this.mapper.map(entities, AdvertiseDto.class))
+				.collect(Collectors.toList());
+	}
+
+//	Find By ID
+	@Override
+	public AdvertiseDto findById(int id) {
+		Optional<AdvertiseEntity> byId = repository.findById(id);
+		AdvertiseDto dto = this.mapper.map(byId, AdvertiseDto.class);
+		return dto;
+	}
+
+//	Delete By ID
+	@Override
+	public boolean deleteById(int id) {
+		Optional<AdvertiseEntity> byId = repository.findById(id);
+		if(byId.isPresent())
+		{
+			AdvertiseEntity entity = byId.get();
+			repository.deleteById(entity.getId());
+			return true;
+		}
+		return false;
+	}
+
+//	Add Advertise
+	@Override
+	public AdvertiseDto addAdvertise(AdvertiseDto dto) {
+		AdvertiseEntity entity = this.mapper.map(dto,AdvertiseEntity.class);
+		entity = repository.save(entity);
+		AdvertiseDto dto2=this.mapper.map(entity, AdvertiseDto.class);
+		return dto2;
+	}
+
+//	Update Advertise
+	@Override
+	public AdvertiseDto updateAdvertise(AdvertiseDto dto, int id) {
+		
+		Optional<AdvertiseEntity> optional = repository.findById(id);
+		
+		if(optional.isEmpty())
+		{
+			throw new EntityNotFoundException("Advertise Record ID"+id+"not found");
+		}
+			
+		AdvertiseEntity entities = optional.get();
+		entities.setTitle(dto.getTitle());
+		entities.setCategory(dto.getCategory());
+		entities.setStatus(dto.getStatus());
+		entities.setPrice(dto.getPrice());
+		entities.setDescription(dto.getDescription());
+		entities.setPhoto(dto.getPhoto());
+		entities.setActive(dto.isActive());
+		entities.setPosted_by(dto.getPosted_by());
+		entities.setUsername(dto.getUsername());
+		
+		AdvertiseEntity save = repository.save(entities);
+		return this.mapper.map(save,AdvertiseDto.class);
+	}
+
+	
+	
+//	Find Advertise By ID
+	@Override
+	public AdvertiseDto findAdvertiseById(int id) {
+		Optional<AdvertiseEntity> optional = repository.findById(id);
+		if(optional.isPresent())
+		{
+			return this.mapper.map(optional, AdvertiseDto.class);
+		}
+		throw new NoSuchElementException("Advertise ID " + id + " not found"); // added the exception here.
+	}
+
+	@Override
+	public List<AdvertiseDto> searchByFilter(String title, String category, String description, int price, int startIndex,
+			int records) {
+		CriteriaBuilder builder=manager.getCriteriaBuilder();
+		CriteriaQuery<AdvertiseEntity> query = builder.createQuery(AdvertiseEntity.class);
+		Root<AdvertiseEntity> root = query.from(AdvertiseEntity.class);
+		
+		
+		Predicate searchTextPredicate=builder.and();
+		Predicate namePredicate=builder.and();
+		Predicate searchTextPredicate=builder.and();
+		
+		
+		return null;
+	}
+	
+	
+
+}

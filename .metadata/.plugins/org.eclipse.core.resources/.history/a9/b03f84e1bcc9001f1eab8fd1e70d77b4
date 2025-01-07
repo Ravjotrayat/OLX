@@ -1,0 +1,12 @@
+package com.login.service;
+
+import org.springframework.stereotype.Service;
+
+import com.login.dto.UserDto;
+
+public interface UserService {
+
+	public UserDto add(UserDto obj);
+
+	public UserDto getAllinfo();
+}

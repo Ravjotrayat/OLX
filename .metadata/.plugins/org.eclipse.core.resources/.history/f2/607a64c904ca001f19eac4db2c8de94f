@@ -1,0 +1,5 @@
+package com.advertise.service;
+
+public interface AdvertiseService {
+
+}

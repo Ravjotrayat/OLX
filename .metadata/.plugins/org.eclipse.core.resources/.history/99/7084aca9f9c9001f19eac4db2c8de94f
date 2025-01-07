@@ -1,0 +1,11 @@
+package com.advertise.dto;
+
+
+public class AdvertiseDto {
+
+	private int id;
+	private String title;
+	private String category;
+	private boolean status;
+	private double price;
+}

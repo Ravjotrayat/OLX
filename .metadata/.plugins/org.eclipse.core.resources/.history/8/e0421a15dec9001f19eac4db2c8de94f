@@ -1,0 +1,17 @@
+package com.login.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "USERS")
+public class UserEntity 
+{
+	private int id;
+	private String username;
+	private String roles;
+	private boolean active;
+	private String firstname;
+	private String lastname;
+	
+}

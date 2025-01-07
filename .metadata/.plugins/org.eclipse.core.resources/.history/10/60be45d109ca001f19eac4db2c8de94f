@@ -1,0 +1,7 @@
+spring.application.name=OLX-Advertises
+server.port=8002
+
+logging.level.root=warn
+
+
+spring.
