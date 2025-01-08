@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,20 +24,20 @@ public class UserAdvertiseController {
 	AdvertiseService service;
 	
 //	All advertise posted by logged in user.(10)
-	@GetMapping(value = "/")
-	public ResponseEntity<List<AdvertiseDto>> getAllinfo( ) //@RequestHeader("Authorization")String authToken
+	@GetMapping(value = "/",produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AdvertiseDto>> getAllinfo() //@RequestHeader("Authorization")String authToken
 	{
-		return new ResponseEntity<List<AdvertiseDto>>(service.getAllinfo(),HttpStatus.OK);
+		List<AdvertiseDto> allinfo  = service.getAllinfo();
+		System.out.println(allinfo);
+		return new ResponseEntity<List<AdvertiseDto>>(allinfo,HttpStatus.OK);
 	}
 	
 //	find Advertise by Id for the LOGGED IN user(11)
 	@GetMapping(value = "/{advertiseId}")
 	public ResponseEntity<AdvertiseDto> findById(@PathVariable int advertiseId)
 	{
-		AdvertiseDto byId = service.findById(advertiseId);
-		if(byId==null)
-				return new ResponseEntity<AdvertiseDto>(HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<AdvertiseDto>(byId,HttpStatus.FOUND);
+		 
+		return new ResponseEntity<AdvertiseDto>(service.findById(advertiseId),HttpStatus.FOUND);
 	}
 	
 //	Delete the advertise posted by logged in user.(12)

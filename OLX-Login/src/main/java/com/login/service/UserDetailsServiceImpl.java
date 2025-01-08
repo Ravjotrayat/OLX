@@ -29,9 +29,10 @@ public class UserDetailsServiceImpl  implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		List<UserEntity> list = repository.findByUserName(username);
+		
 //        if(list==null || list.size()==0)
 //              throw new UsernameNotFoundException(username);
-//        
+////        
 //If exception is not thrown, then username is present,now take the username
 //        UserEntity entity=list.get(0);
 //        Collection<GrantedAuthority>authorities=new ArrayList<>();

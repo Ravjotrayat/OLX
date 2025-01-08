@@ -1,5 +1,0 @@
-package com.advertise.repository;
-
-public interface AdvertiseRepository {
-
-}

@@ -37,7 +37,7 @@ public class AdvertiseController {
 	
 	
 	
-//	Add new Advertise Post(9)
+//	Update Advertise Post(9)
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AdvertiseDto> update(@Valid @RequestBody AdvertiseDto dto,
 			@PathVariable int id)  // @RequestHeader("Authorization")String authToken,

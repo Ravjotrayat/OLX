@@ -12,13 +12,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "ADVERTISES")
 public class AdvertiseEntity 
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	@Column(name = "title")
@@ -39,11 +41,11 @@ public class AdvertiseEntity
 	@Lob
 	private byte[] photo;
 	
-	@CreatedDate
-	@Column(name = "created_date",updatable = false)
+	@Temporal(TemporalType.DATE)
+	@Column(name = "created_date") //,updatable = false
 	private int created_date;
 	
-	@LastModifiedDate
+	@Temporal(TemporalType.DATE)
 	@Column(name = "modified_date")
 	private int modified_date;
 	
